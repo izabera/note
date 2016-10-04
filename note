@@ -1,0 +1,41 @@
+#!/bin/bash
+cd ~/sv/note || exit
+
+hastitle () {
+  # if line 2 is empty and we have more than 1 line, use line 1 as a title
+  ! awk 'NR == 2 && /./ { exit(0) } NR == 3 { exit(1) }' "$@"
+}
+
+printf -v now '%(%s)T'
+printf -v title 'Random thought: %(%D %T)T'
+
+# note this is the text of my note
+if (( $# )); then
+  printf "%s\n" "$*" > "$now"
+
+else
+  f=$(mktemp) || exit
+  trap 'rm "$f"' exit
+
+  # note <opens vim>
+  if [[ -t 0 ]]; then
+    vim "$f"
+  # cmd | note
+  else
+    cat > "$f"
+  fi
+
+  [[ ! -s $f ]] && exit
+  sed -i '/^#/d' "$f"
+
+  {
+    hastitle "$f" && { read -r title; read -r; }
+    cat
+  } < "$f" > "$now"
+fi
+
+{
+  git add "$now"
+  git commit -m "$title"
+  git push
+} 2>/dev/null
