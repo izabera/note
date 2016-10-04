@@ -1,0 +1,13 @@
+on bsd kernels, you can execute scripts with mode 100
+why this?  because execve will open the file for you and pass `/dev/fd/num` as
+an argument to the interpreter
+
+so this happens:
+- if you have a script that starts with `#!/usr/bin/env python`, you can read
+it with `ln /bin/cat ./python; PATH=. ./myscript`
+- if you use ktrace you can read that script
+- if you attach with gdb you can read that script
+- if procfs is mounted you can read that script
+- if you use `chmod -R o-r /my/dir` your scripts are still readable
+
+yay security
