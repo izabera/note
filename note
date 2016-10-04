@@ -38,4 +38,4 @@ fi
   git add "$now"
   git commit -m "$title"
   git push
-} 2>/dev/null
+} >/dev/null 2>&1 &
