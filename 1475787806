@@ -1,0 +1,1 @@
+whenever non sequential access is needed, assoc[$((x+y))] is faster than index[x+y]
