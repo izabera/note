@@ -1,0 +1,12 @@
+izalove | ok so you create a fifo and try to read from it
+izalove | if there's no writer, open blocks
+izalove | so this can take an arbitrarily long time and uses virtually zero resources  : < fifo
+izalove | so one can write a loop that looks like this        while : < fifo; do stuff to do here; done
+izalove | put that loop in bg
+izalove | run several loops like that with different bodies, each loop reads from a different fifo
+izalove | now create a central function that handles some event
+izalove | that function just does this when it gets the event      : > fifo123
+izalove | and the loop that reads from fifo123 suddenly wakes up and does one iteration
+izalove | this way one can register event handlers
+izalove | and this doesn't even need a central function to handle events, just anything that opens a fifo for a moment will be fine
+izalove | -fin-
