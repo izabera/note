@@ -1,0 +1,7 @@
+wooledg@wooledg:~$ ls -l /usr/local/bin/ugh /tmp/ugh
+-rwxr-xr-x 1 wooledg wooledg 37 Oct 18 11:26 /tmp/ugh
+lrwxrwxrwx 1 root    staff    8 Oct 18 11:26 /usr/local/bin/ugh -> /tmp/ugh
+wooledg@wooledg:~$ cat /tmp/ugh
+echo "${BASH_SOURCE%/*}"
+wooledg@wooledg:~$ ugh
+/usr/local/bin
