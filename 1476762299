@@ -1,0 +1,4 @@
+
+in test runs without previous allocations, malloc returns zeroed memory
+that hides serious bugs
+overriding malloc to actually fill that memory with junk makes those bugs very obvious
